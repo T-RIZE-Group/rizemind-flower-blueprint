@@ -1,0 +1,74 @@
+services:
+  supernode-1:
+    image: flwr/supernode:1.21.0
+    container_name: supernode-1
+    ports:
+      - "9094:9094"
+    networks:
+      - flwr-network
+    command:
+      - --insecure
+      - --superlink
+      - superlink:9092
+      - --node-config
+      - "partition-id=0 num-partitions=2"
+      - --clientappio-api-address
+      - 0.0.0.0:9094
+      - --isolation
+      - process
+
+  supernode-2:
+    image: flwr/supernode:1.21.0
+    container_name: supernode-2
+    ports:
+      - "9095:9095"
+    networks:
+      - flwr-network
+    command:
+      - --insecure
+      - --superlink
+      - superlink:9092
+      - --node-config
+      - "partition-id=1 num-partitions=2"
+      - --clientappio-api-address
+      - 0.0.0.0:9095
+      - --isolation
+      - process
+
+  superexec-clientapp-1:
+    build:
+      context: .
+      dockerfile: superexec.Dockerfile
+    image: rizemind_superexec:0.0.1
+    container_name: superexec-clientapp-1
+    networks:
+      - flwr-network
+    depends_on:
+      - supernode-1
+    command:
+      - --insecure
+      - --plugin-type
+      - clientapp
+      - --appio-api-address
+      - supernode-1:9094
+
+  superexec-clientapp-2:
+    build:
+      context: .
+      dockerfile: superexec.Dockerfile
+    image: rizemind_superexec:0.0.1
+    container_name: superexec-clientapp-2
+    networks:
+      - flwr-network
+    depends_on:
+      - supernode-2
+    command:
+      - --insecure
+      - --plugin-type
+      - clientapp
+      - --appio-api-address
+      - supernode-2:9095
+
+networks:
+  flwr-network:
+    external: true

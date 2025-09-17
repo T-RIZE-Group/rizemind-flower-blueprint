@@ -1,0 +1,35 @@
+services:
+  superlink:
+    image: flwr/superlink:latest
+    container_name: superlink
+    ports:
+      - "9091:9091"
+      - "9092:9092"
+      - "9093:9093"
+    networks:
+      - flwr-network
+    command:
+      - --insecure
+      - --isolation
+      - process
+
+  superexec-serverapp:
+    build:
+      context: .
+      dockerfile: superexec.Dockerfile
+    image: rizemind_superexec:0.0.1
+    container_name: superexec-serverapp
+    networks:
+      - flwr-network
+    depends_on:
+      - superlink
+    command:
+      - --insecure
+      - --plugin-type
+      - serverapp
+      - --appio-api-address
+      - superlink:9091
+
+networks:
+  flwr-network:
+    external: true
