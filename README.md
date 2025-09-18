@@ -66,12 +66,10 @@ docker network create flwr-network
 
 ### Start services
 
-Bring up Superlink and Supernode via compose (in two steps):
+Bring up Superlink and Supernode via compose:
 
 ```bash
-docker compose -f docker/superlink.docker-compose.yaml up -d
-
-docker compose -f docker/supernode.docker-compose.yaml up -d
+docker compose -f docker/superlink.docker-compose.yaml -f docker/supernode.docker-compose.yaml up -d
 ```
 
 ### Run the Flower deployment
@@ -87,9 +85,7 @@ This will launch the server and clients as configured and stream logs to your te
 ### Tear down
 
 ```bash
-docker compose -f docker/supernode.docker-compose.yaml down
-
-docker compose -f docker/superlink.docker-compose.yaml down
+docker compose -f docker/supernode.docker-compose.yaml -f docker/superlink.docker-compose.yaml down
 
 docker network rm flwr-network
 ```
