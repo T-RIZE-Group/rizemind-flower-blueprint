@@ -1,6 +1,6 @@
-# RizeMind + Flower Blueprint
+# Rizemind + Flower Blueprint
 
-A minimal blueprint showing how to integrate [RizeMind] with [Flower] for federated learning. It trains a simple `RealMLP` on the California Housing dataset using Flower clients.
+A minimal blueprint showing how to integrate `Rizemind` with `Flower` for federated learning. It trains a simple `RealMLP` on the California Housing dataset using Flower clients.
 
 ## Features
 
