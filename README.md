@@ -32,16 +32,12 @@ uv sync --all-groups
    uv run rzmnd account generate NAME_OF_YOUR_ACCOUNT
    ```
 
-2. Copy the generated mnemonic file to your local keystore:
-
-   - Place it at `.rzmnd/keystore/rizenet_testnet_example.json` (or your chosen file name - make sure to change the `superexec.Dockerfile` if necessary)
-
-3. Fill the following sections in `pyproject.toml`:
+2. Fill the following sections in `pyproject.toml`:
 
    ```toml
    [tool.eth.account.mnemonic_store]
-   account_name = "account_name"
-   passphrase  = "passphrase"
+   account_name = "account_name" # -> e.g. NAME_OF_YOUR_ACCOUNT
+   passphrase  = "passphrase" # -> e.g. passphrase for NAME_OF_YOUR_ACCOUNT
 
    [tool.mlflow.config]
    run_name        = "run_name"

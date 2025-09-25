@@ -23,6 +23,10 @@ services:
       - flwr-network
     depends_on:
       - superlink
+    volumes:
+      - ~/.rzmnd/keystore:/app/.rzmnd/keystore
+    environment:
+      - GIT_PYTHON_REFRESH=quiet
     command:
       - --insecure
       - --plugin-type
